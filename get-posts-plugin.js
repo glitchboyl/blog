@@ -17,6 +17,21 @@ export default function getPostsPlugin() {
       }
     },
 
+    handleHotUpdate({ file, server }) {
+      const isPostUpdated = file.match(/\/posts\/(.*)\/.*$/);
+      if (isPostUpdated) {
+        server.ws.send({
+          type: "custom",
+          event: "update",
+          data: {
+            file,
+            name: isPostUpdated[1],
+          },
+        });
+      }
+      return [];
+    },
+
     async load(id) {
       if (id === resolvedVirtualModuleId) {
         let rawPosts = await readdir(postsDir, { withFileTypes: true });

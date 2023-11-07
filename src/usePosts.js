@@ -19,9 +19,62 @@ const md = markdownIt({
   },
 });
 
-const [posts] = createResource(
+let db;
+
+const fetchPost = async (name) => {
+  try {
+    let rawPost = await fetch(`/posts/${name}/index.md`);
+    if (rawPost.ok) {
+      rawPost = await rawPost.text();
+      const { data, content } = frontmatter(rawPost);
+      return {
+        name,
+        ...data,
+        content: md.render(content),
+      };
+    } else {
+      throw new Error("fetch post error");
+    }
+  } catch (_) {
+    return null;
+  }
+};
+
+const getPost = (name) =>
+  new Promise((resolve) => {
+    const request = db
+      .transaction("posts", "readonly")
+      .objectStore("posts")
+      .get(name);
+
+    request.onsuccess = async () => {
+      if (request.result) {
+        resolve(request.result);
+        updatePost(request.result);
+      } else {
+        const post = await fetchPost(name);
+        if (post) {
+          db.transaction("posts", "readwrite").objectStore("posts").add(post);
+        }
+        resolve(post);
+      }
+    };
+  });
+
+const updatePost = async ({ name, title, date, content }) => {
+  const post = await fetchPost(name);
+  if (
+    post &&
+    (post.content !== content || post.title !== title || post.date !== date)
+  ) {
+    db.transaction("posts", "readwrite").objectStore("posts").put(post);
+    mutate({ ...posts(), [name]: post });
+  }
+};
+
+const [posts, { mutate }] = createResource(
   async () => {
-    const db = await new Promise((resolve) => {
+    db = await new Promise((resolve) => {
       const request = indexedDB.open("glitchboylsBlogDB");
       request.onupgradeneeded = () =>
         request.result.createObjectStore("posts", {
@@ -30,38 +83,27 @@ const [posts] = createResource(
       request.onsuccess = () => resolve(request.result);
     });
 
-    const _posts = {};
+    const postStore = {};
     for (const name of names) {
-      const post = await new Promise((resolve) => {
-        const request = db
-          .transaction("posts", "readonly")
-          .objectStore("posts")
-          .get(name);
-        request.onsuccess = async () => {
-          if (request.result) {
-            resolve(request.result);
-          } else {
-            const rawPost = await (
-              await fetch(`/posts/${name}/index.md`)
-            ).text();
-            const { data, content } = frontmatter(rawPost);
-            const post = {
-              name,
-              ...data,
-              content: md.render(content),
-            };
-            db.transaction("posts", "readwrite").objectStore("posts").add(post);
-            resolve(post);
-          }
-        };
-      });
-      _posts[name] = post;
+      const post = await getPost(name);
+      postStore[name] = post;
     }
 
-    return _posts;
+    return postStore;
   },
   { initialValue: {} }
 );
+
+if (import.meta.hot) {
+  import.meta.hot.on("update", ({ file, name }) => {
+    if (
+      (file.endsWith(".md") && file.endsWith("/index.md")) ||
+      !file.endsWith(".md")
+    ) {
+      getPost(name);
+    }
+  });
+}
 
 export default function usePosts() {
   return posts;
