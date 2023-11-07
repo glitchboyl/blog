@@ -1,4 +1,4 @@
-import { createResource } from "solid-js";
+import { createResource, createMemo } from "solid-js";
 import frontmatter from "frontmatter";
 import markdownIt from "markdown-it";
 import hljs from "highlight.js";
@@ -24,8 +24,10 @@ md.renderer.rules.image = (tokens, idx, options, env, self) => {
   const token = tokens[idx];
   let src = token.attrs[token.attrIndex("src")][1];
   if (!src.startsWith("http")) {
-    src = src.replace(/^\.?\/?/, "");
-    token.attrs[token.attrIndex("src")][1] = `/posts/${env}/${src}`;
+    src = src.replace(/^(\.\/|\/)?/, "");
+    token.attrs[token.attrIndex("src")][1] = `/posts/${
+      src.startsWith("../") ? src.replace("../", "") : `${env}/${src}`
+    }`;
   }
   return imageRenderer(tokens, idx, options, env, self);
 };
@@ -74,11 +76,11 @@ const updatePost = async ({ name, title, date, content }) => {
     (post.content !== content || post.title !== title || post.date !== date)
   ) {
     db.transaction("posts", "readwrite").objectStore("posts").put(post);
-    mutate({ ...posts(), [name]: post });
+    mutate({ ...store(), [name]: post });
   }
 };
 
-const [posts, { mutate }] = createResource(
+const [store, { mutate }] = createResource(
   async () => {
     db = await new Promise((resolve) => {
       const request = indexedDB.open("glitchboylsBlogDB");
@@ -89,13 +91,13 @@ const [posts, { mutate }] = createResource(
       request.onsuccess = () => resolve(request.result);
     });
 
-    const postStore = {};
+    const _store = {};
     for (const name of names) {
       const post = await getPost(name);
-      postStore[name] = post;
+      _store[name] = post;
     }
 
-    return postStore;
+    return _store;
   },
   { initialValue: {} }
 );
@@ -112,5 +114,10 @@ if (import.meta.hot) {
 }
 
 export default function usePosts() {
-  return posts;
+  const posts = createMemo(() =>
+    Object.values(store()).sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    )
+  );
+  return { posts, store };
 }
