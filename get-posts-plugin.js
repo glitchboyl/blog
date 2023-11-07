@@ -17,17 +17,21 @@ export default function getPostsPlugin() {
       }
     },
 
-    handleHotUpdate({ file, server }) {
+    async handleHotUpdate({ file, server }) {
       const isPostUpdated = file.match(/\/posts\/(.*)\/.*$/);
       if (isPostUpdated) {
-        server.ws.send({
-          type: "custom",
-          event: "update",
-          data: {
-            file,
-            name: isPostUpdated[1],
-          },
-        });
+        const name = isPostUpdated[1];
+        try {
+          await access(postPath(name), constants.R_OK);
+          server.ws.send({
+            type: "custom",
+            event: "post-update",
+            data: {
+              file,
+              name,
+            },
+          });
+        } catch {}
       }
       return [];
     },

@@ -5,21 +5,20 @@ import hljs from "highlight.js";
 import "highlight.js/styles/nord.css";
 import { posts as names } from "virtual:get-posts";
 
+let db;
 const md = markdownIt({
-  highlight: function (str, lang) {
+  highlight: (str, lang) => {
     if (lang && hljs.getLanguage(lang)) {
       try {
         return `<pre class="hljs"><code>${
           hljs.highlight(str, { language: lang, ignoreIllegals: true }).value
         }</code></pre>
         `;
-      } catch (__) {}
+      } catch {}
     }
     return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
   },
 });
-
-let db;
 
 const fetchPost = async (name) => {
   try {
@@ -32,12 +31,9 @@ const fetchPost = async (name) => {
         ...data,
         content: md.render(content),
       };
-    } else {
-      throw new Error("fetch post error");
     }
-  } catch (_) {
-    return null;
-  }
+  } catch {}
+  return null;
 };
 
 const getPost = (name) =>
@@ -95,7 +91,7 @@ const [posts, { mutate }] = createResource(
 );
 
 if (import.meta.hot) {
-  import.meta.hot.on("update", ({ file, name }) => {
+  import.meta.hot.on("post-update", ({ file, name }) => {
     if (
       (file.endsWith(".md") && file.endsWith("/index.md")) ||
       !file.endsWith(".md")
