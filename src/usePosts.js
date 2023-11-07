@@ -19,6 +19,16 @@ const md = markdownIt({
     return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
   },
 });
+const imageRenderer = md.renderer.rules.image;
+md.renderer.rules.image = (tokens, idx, options, env, self) => {
+  const token = tokens[idx];
+  let src = token.attrs[token.attrIndex("src")][1];
+  if (!src.startsWith("http")) {
+    src = src.replace(/^\.?\/?/, "");
+    token.attrs[token.attrIndex("src")][1] = `/posts/${env}/${src}`;
+  }
+  return imageRenderer(tokens, idx, options, env, self);
+};
 
 const fetchPost = async (name) => {
   try {
@@ -29,7 +39,7 @@ const fetchPost = async (name) => {
       return {
         name,
         ...data,
-        content: md.render(content),
+        content: md.render(content, name),
       };
     }
   } catch {}
