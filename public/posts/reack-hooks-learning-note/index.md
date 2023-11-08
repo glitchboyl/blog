@@ -14,7 +14,10 @@ date: 2019.11.20
 React Hook 可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性.
 对于 Hooks 就不更多介绍了, 请戳 [这里查看](https://reactjs.org/docs/hooks-intro.html#motivation).
 
-## 开始使用
+
+
+### 开始使用
+
 - [useState](#usestate)
 - [useEffect](#useeffect)
 - [useContext](#usecontext)
@@ -23,11 +26,12 @@ React Hook 可以让你在不编写 class 的情况下使用 state 以及其他�
 
 　
 
-## <a name="usestate">useState</a>
+### <a name="usestate">useState</a>
+
 `useState()` 只接收一个初始 state 参数, 返回值为**当前 state 以及更新 state 的函数**.
 
 这里贴一个[官方示例](https://reactjs.org/docs/hooks-state.html): 
-```jsx
+```javascript
 const Example = () => {
   //  等号左边的名字并不是 React API 的部分, 你可以自己取名字.
   const [count, setCount] = React.useState(0);
@@ -46,7 +50,8 @@ const Example = () => {
 
 　
 
-## <a name="useeffect">useEffect</a>
+### <a name="useeffect">useEffect</a>
+
 `useEffect` 可以让你在 Function Component 中执行副作用操作.
 这个 hook 比较复杂, 需要多说一下.
 
@@ -62,7 +67,7 @@ const Example = () => {
 `useEffect` 会在每次渲染后都执行, 每次运行 effect 的同时, DOM 都已经更新完毕.
 
 这里贴一个[官方示例](https://reactjs.org/docs/hooks-effect.html): 
-```jsx
+```javascript
 const Example = () => {
   //  等号左边的名字并不是 React API 的部分, 你可以自己取名字.
   const [count, setCount] = React.useState(0);
@@ -96,7 +101,7 @@ React.useEffect(() => {
 
 然后你还可以传递数组作为 `useEffect` 的第二个参数, 将变量传入数组中, effect 会检测两次 render 之间这些变量是否发生了变化, 如果没有则会跳过 effect. 
 这是 effect hook 性能优化的一环. 就像这样:
-```jsx
+```javascript
 const Example = () => {
   const [count, setCount] = React.useState(0);
   const [Rick, Morty] = React.useState('test');
@@ -124,13 +129,14 @@ const Example = () => {
 
 　
 
-## <a name="usecontext">useContext</a>
+### <a name="usecontext">useContext</a>
+
 `useContext()` 接收一个 ReactContext 对象为参数, 返回值为该 context 的当前值.
 
 其实, `useContext` 就是相当于 Class Component 中的 `static contextType = Context` 或者 `<Context.Consumer>`.
 
 这里贴一个我改版的[官方示例](https://reactjs.org/docs/hooks-reference.html#usecontext):
-```jsx
+```javascript
 const Theme = {
   color: '#FF0000',
   background: '#FFFFFF'
@@ -171,7 +177,8 @@ const App = () => {
 
 　
 
-## <a name="usereducer">useReducer</a>
+### <a name="usereducer">useReducer</a>
+
 `useReducer` 接收一个形如 `(state, action) => newState` 的 reducer, 并返回当前的 state 以及与其配套的 dispatch 方法. 就和 Redux 的写法一毛一样.
 
 它其实和 `useState` 差不多, 在某些场景下, 它可以更好替代 `useState`. 例如 state 逻辑较复杂且包含多个子值, 或者下一个 state 依赖于之前的 state 等. 
@@ -223,7 +230,8 @@ const [count, dispatch] = React.useReducer((state, action: any) => {
 
 　
 
-## <a name="useref">useRef</a>
+### <a name="useref">useRef</a>
+
 `useRef` 返回一个可变的 ref 对象, 其 `.current` 属性被初始化为传入的参数 (initialValue).
 返回的 ref 对象在组件的整个生命周期内保持不变.
 

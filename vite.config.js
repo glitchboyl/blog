@@ -14,18 +14,11 @@ export default defineConfig({
     minify: true,
     rollupOptions: {
       treeshake: true,
-      external: [
-        "markdown-it",
-        "highlight.js",
-        //  "highlight.js/styles/nord.css"
-      ],
+      external: ["markdown-it", "shiki"],
       output: {
         paths: {
           "markdown-it": cdn("markdown-it@13.0.2/dist/markdown-it.min.js/+esm"),
-          "highlight.js": cdn("highlight.js@11.9.0/+esm"),
-          // "highlight.js/styles/nord.css": cdn(
-          //   "highlight.js@11.9.0/styles/nord.min.css"
-          // ),
+          shiki: cdn("shiki@0.14.5/+esm"),
         },
       },
     },

@@ -34,13 +34,13 @@ B 树是一种自平衡的树，又名 m 叉平衡多路查找树。
 
 王道视频里整的是 5 叉树，我这里随随便便弄个 3 叉的就好了。
 
-```C
+```c
 #define M 3          // 定义B树的最大度数为3
 #define MAX_HEIGHT 3 // 定义B树的最大高度为3
 ```
 
 首先需要定义 B 树的结点结构：
-```C
+```c
 typedef struct BTreeNode
 {
   int keywords[M];                   // 节点中存储的关键字数组
@@ -56,7 +56,7 @@ typedef struct BTreeNode
 
 然后写初始化 B 树的方法：
 
-```C
+```c
 void InitBTree(BTree *t)
 {
   *t = (BTree)malloc(sizeof(BTreeNode)); // 分配内存
@@ -72,7 +72,7 @@ void InitBTree(BTree *t)
 
 好的，这样一棵 B 树就创建完成了：
 
-```C
+```c
 int main()
 {
   BTree BT;
@@ -105,7 +105,7 @@ int main()
 4. 将原结点的第一个分支指针指向左子树，第二个分支指针指向右子树。
 
 根据上述思路写出的代码：
-```C
+```c
 
 // 将关键字插入到结点中
 int RawInsertKeyword(BTreeNode *node, int keyword)
@@ -232,7 +232,7 @@ void InsertKeyword(BTree *bt, int keyword)
 
 这样 B 树的关键字插入操作就完成了。来打印试试，先写个打印方法：
 
-```C
+```c
 // 打印一个B树结点
 void PrintBTreeNode(BTreeNode node)
 {
@@ -269,7 +269,7 @@ void PrintBTree(BTree bt)
 
 然后往B树中插入一些关键字：
 
-```C
+```c
 // 往B树中插入一些关键字
 int insertKeywords[] = {60, 25, 38, 49, 80, 66, 71};
 int insertLength = sizeof(insertKeywords) / sizeof(int);
@@ -311,7 +311,7 @@ PrintBTree(BT);
 
 因此根据上述思路写出来的代码是这样的：
 
-```C
+```c
 // 从兄弟结点中偷一个关键字到当前结点中
 void StealingKeyword(BTreeNode *bt, BTreeNode *parentNode, int index)
 {
@@ -499,7 +499,7 @@ void DeleteKeyword(BTree *bt, int keyword)
 
 对所有可能出现的情况都试验一下，从B树中删除一些关键字，并打印每次删除后的B树：
 
-```C
+```c
 int deleteKeywords[] = {49, 60, 80};
 int deleteLength = sizeof(deleteKeywords) / sizeof(int);
 for (int j = 0; j < deleteLength; j++)

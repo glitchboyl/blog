@@ -16,7 +16,7 @@ AVL 树的优点是查找、插入和删除操作的时间复杂度都是 O(log 
 
 来试着写一下。先定义 AVL 树结点的结构：
 
-```C
+```c
 typedef struct AVLTreeNode
 {
   int key;                             // 结点键值
@@ -27,7 +27,7 @@ typedef struct AVLTreeNode
 
 定义方法来创建结点：
 
-```C
+```c
 AVLTreeNode *CreateNode(int key)
 {
   AVLTreeNode *node = (AVLTreeNode *)malloc(sizeof(AVLTreeNode));
@@ -40,7 +40,7 @@ AVLTreeNode *CreateNode(int key)
 
 然后需要写一些辅助方法来计算结点的平衡因子，以及旋转后更新结点的高度：
 
-```C
+```c
 // 获取结点高度
 int GetHeight(AVLTreeNode *node)
 {
@@ -120,7 +120,7 @@ OK，准备工作都完成了。接下来写 AVL 树的插入以及删除操作�
 4. 按照上面的对应旋转操作改指针指向就完事了。
 
 插入的代码实现：
-```C
+```c
 AVLTreeNode *Insert(AVLTree *tree, int key)
 {
   if (!(*tree)) // 如果树为空
@@ -209,7 +209,7 @@ AVLTreeNode *Insert(AVLTree *tree, int key)
 5. 当删除操作完成后，沿着经过的结点数组往回重新计算高度和平衡因子，如果失衡则最小不平衡树的根节点一定也这个数组里面。
 
 下面是根据思路实现的删除方法的代码：
-```C
+```c
 void Delete(AVLTree *tree, int n)
 {
   AVLTreeNode *p = *tree;

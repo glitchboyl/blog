@@ -195,7 +195,7 @@ function checkout(x, y, deep) {
 ```
 
 用 `minesGrid` 生成雷区组件. 点击触发踩雷.
-```jsx
+```javascript
 const MinesGrid = () =>
   minesGrid.map((row, x) => (
     <Minesweeper.Game.MinesGrid.Row key={`row-${x}`}>
@@ -214,7 +214,7 @@ const MinesGrid = () =>
 ```
 
 插入渲染.
-```jsx
+```javascript
 ...
   <Minesweeper>
     <Minesweeper.Game>
