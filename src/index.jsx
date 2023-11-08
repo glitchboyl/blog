@@ -2,11 +2,11 @@ import { render } from "solid-js/web";
 import { Router, Route, Routes, hashIntegration } from "@solidjs/router";
 import { lazy } from "solid-js";
 
+import "virtual:uno.css";
+
 const App = lazy(() => import("./App"));
 const Post = lazy(() => import("./Post"));
 const NotFound = lazy(() => import("./NotFound"));
-
-import "virtual:uno.css";
 
 render(
   () => (
