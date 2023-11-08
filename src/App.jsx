@@ -17,7 +17,13 @@ export default function App() {
               <A className="no-underline" href={name}>
                 {"#"}&nbsp;&nbsp;&nbsp;{title}
               </A>
-              <span className="sm:ml-1rem text-date">{date}</span>
+              <span className="sm:ml-1rem text-date">
+                {new Date(date).toLocaleDateString("en", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </span>
             </li>
           )}
         </For>

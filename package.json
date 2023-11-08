@@ -14,8 +14,8 @@
   },
   "devDependencies": {
     "frontmatter": "^0.0.3",
-    "highlight.js": "^11.9.0",
     "markdown-it": "^13.0.2",
+    "shiki": "^0.14.5",
     "unocss": "^0.57.1",
     "vite": "^4.4.5",
     "vite-plugin-solid": "^2.7.0"

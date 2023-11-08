@@ -28,9 +28,15 @@ export default function Post() {
   });
 
   return (
-    <Show when={!posts.loading}>
+    <Show when={!posts.loading && post().name}>
       <h2>{post().title}</h2>
-      <p className="text-date">{post().date}</p>
+      <p className="text-date">
+        {new Date(post().date).toLocaleDateString("en", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        })}
+      </p>
       <div className="mt-4.5rem" innerHTML={post().content} />
       <p className="text-right mt-4.5rem">
         <A href="/">

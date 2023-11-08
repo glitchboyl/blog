@@ -29,7 +29,7 @@ const fetchPost = async (name) => {
   try {
     const rawPost = await fetch(`/posts/${name}/index.md`);
     if (rawPost.ok) {
-      return parser({
+      return await parser({
         name,
         raw: await rawPost.text(),
       });
@@ -84,7 +84,7 @@ if (import.meta.hot) {
 export default function usePosts() {
   const posts = createMemo(() =>
     Object.values(store()).sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      (a, b) => Date.parse(b.date) - Date.parse(a.date)
     )
   );
   return { posts, store };
