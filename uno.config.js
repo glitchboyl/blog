@@ -18,7 +18,6 @@ export default defineConfig({
       "table-border:dark": "#30363d",
       "table-2n-row": "#f6f8fa",
       "table-2n-row:dark": "#161b22",
-      "code-block-bg": "#1F2029",
     },
   },
   preflights: [
