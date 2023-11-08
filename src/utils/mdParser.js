@@ -17,17 +17,37 @@ const md = markdownIt({
     return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
   },
 });
-const imageRenderer = md.renderer.rules.image;
-md.renderer.rules.image = (tokens, idx, options, env, self) => {
-  const token = tokens[idx];
-  let src = token.attrs[token.attrIndex("src")][1];
-  if (!src.startsWith("http")) {
-    src = src.replace(/^(\.\/|\/)?/, "");
-    token.attrs[token.attrIndex("src")][1] = `/posts/${
-      src.startsWith("../") ? src.replace("../", "") : `${env}/${src}`
+
+const handlePostLink = (link, env) => {
+  if (!link.startsWith("http")) {
+    link = link.replace(/^(\.\/|\/)?/, "");
+    return `/posts/${
+      link.startsWith("../") ? link.replace("../", "") : `${env}/${link}`
     }`;
   }
+  return link;
+};
+
+const { image: imageRenderer, html_block: htmlBlockRenderer } =
+  md.renderer.rules;
+
+md.renderer.rules.image = (tokens, idx, options, env, self) => {
+  const token = tokens[idx];
+  token.attrs[token.attrIndex("src")][1] = handlePostLink(
+    token.attrs[token.attrIndex("src")][1],
+    env
+  );
   return imageRenderer(tokens, idx, options, env, self);
+};
+const temp = document.createElement("temp");
+md.renderer.rules.html_block = (tokens, idx, options, env, self) => {
+  temp.innerHTML = tokens[idx].content;
+  const block = temp.querySelector("[src]");
+  if (block) {
+    block.setAttribute("src", handlePostLink(block.getAttribute("src"), env));
+    tokens[idx].content = temp.innerHTML;
+  }
+  return htmlBlockRenderer(tokens, idx, options, env, self);
 };
 
 export default function parser({ name, raw }) {
