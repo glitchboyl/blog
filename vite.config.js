@@ -14,11 +14,10 @@ export default defineConfig({
     minify: true,
     rollupOptions: {
       treeshake: true,
-      external: ["markdown-it", "shiki"],
+      external: ["markdown-it"],
       output: {
         paths: {
           "markdown-it": cdn("markdown-it@13.0.2/dist/markdown-it.min.js/+esm"),
-          shiki: cdn("shiki@0.14.5/+esm"),
         },
       },
     },
