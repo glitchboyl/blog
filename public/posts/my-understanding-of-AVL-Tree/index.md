@@ -72,15 +72,15 @@ OK，准备工作都完成了。接下来写 AVL 树的插入以及删除操作�
 旋转操作其实就是类似于让子结点来当父结点，原来的父结点变成新父结点的子结点。
 听起来有点绕，画个图理解一下，假设现在有一棵普通的二叉排序树：G > F > S
 
-<img src="gfs.png" alt="GFS" style="zoom:30%;" />
+<img src="GFS.png" alt="GFS" style="zoom:50%;" />
 
 它经过旋转之后变成这样：
 
-<img src="fsg.png" alt="FSG" style="zoom:30%;" />
+<img src="FSG.png" alt="FSG" style="zoom:50%;" />
 
 或者这样：
 
-<img src="sgf.png" alt="SGF" style="zoom:30%;" />
+<img src="SGF.png" alt="SGF" style="zoom:50%;" />
 
 旋转之后依旧符合 G > F > S 的规则，不如说只能在这个基础上进行旋转。
 
