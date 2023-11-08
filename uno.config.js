@@ -14,6 +14,8 @@ export default defineConfig({
       "hyperlink:dark": "#8B8C8D",
       "hyperlink:hover": "#E282FA",
       "hyperlink:dark:hover": "#EDA8FB",
+      "table-border": "#d0d7de",
+      "table-2n-row": "#f6f8fa",
     },
   },
   preflights: [
@@ -28,6 +30,10 @@ export default defineConfig({
           a{color:${colors["hyperlink:dark"]}}
           a:hover{color:${colors["hyperlink:dark:hover"]}}
         }
+        img{max-width:100%;}
+        table{width:max-content;max-width:100%;display:block;overflow:auto;border-spacing:0;border-collapse:collapse;}
+        table th,table td{padding:0.375rem 0.825rem;border-width: 1px;border-style: solid;border-color:${colors["table-border"]};}
+        table tr:nth-child(2n){background-color:${colors["table-2n-row"]}}
       `,
     },
   ],

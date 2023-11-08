@@ -1,7 +1,7 @@
 import frontmatter from "frontmatter";
 import markdownIt from "markdown-it";
 import hljs from "highlight.js";
-import "highlight.js/styles/nord.css";
+import "highlight.js/styles/gradient-dark.min.css";
 
 const md = markdownIt({
   html: true,
