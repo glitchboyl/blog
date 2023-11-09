@@ -1,6 +1,8 @@
 import { createSignal, createMemo, createEffect } from "solid-js";
 import { useParams, useNavigate, A } from "@solidjs/router";
+import { title } from "./meta.data";
 import usePosts from "./utils/usePosts";
+import useTitle from "./utils/useTitle";
 
 export default function Post() {
   const params = useParams();
@@ -20,6 +22,7 @@ export default function Post() {
     if (!store.loading) {
       if (params.title in store()) {
         setPost(store()[params.title]);
+        useTitle(`${post().title} - ${title}`);
       } else {
         const navigate = useNavigate();
         navigate("/404", { replace: true });
