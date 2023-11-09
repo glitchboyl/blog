@@ -49,6 +49,20 @@ export default defineConfig({
               },
             },
           },
+          {
+            urlPattern: /^https:\/\/i\.loli\.net\/\//i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "image-hosting-service",
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
         ],
       },
       devOptions: {
