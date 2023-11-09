@@ -27,7 +27,7 @@ const [store, { mutate }] = createResource(
 
 const fetchPost = async (name) => {
   try {
-    const rawPost = await fetch(`/posts/${name}/index.md`);
+    const rawPost = await fetch(`./posts/${name}/index.md`);
     if (rawPost.ok) {
       return await parser({
         name,

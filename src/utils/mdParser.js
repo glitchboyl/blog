@@ -12,7 +12,7 @@ const createMarkdownRenderer = async () => {
   const handlePostLink = (link, env) => {
     if (!link.startsWith("http")) {
       link = link.replace(/^(\.\/|\/)?/, "");
-      return `/posts/${
+      return `./posts/${
         link.startsWith("../") ? link.replace("../", "") : `${env}/${link}`
       }`;
     }
