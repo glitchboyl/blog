@@ -26,6 +26,7 @@ export default defineConfig({
         *{box-sizing:border-box}
         html{font-family:serif;}
         pre{margin-left:-1rem;margin-right:-1rem;padding:1rem;overflow:auto;border-radius: 0.5rem;}
+        blockquote{margin-left:-1rem;margin-right:-1rem;padding-left:1rem;padding-right:1rem;border-left:3px solid;border-color:#A9AAB8;}
         a{color:${colors.hyperlink};transition-property:color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:300ms;}
         a:hover{color:${colors["hyperlink:hover"]}}
         img{max-width:100%;}
