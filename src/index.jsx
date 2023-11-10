@@ -10,7 +10,7 @@ const NotFound = lazy(() => import("./NotFound"));
 
 render(
   () => (
-    <div className="max-w-42rem m-auto mt-6.75rem mb-8rem pl-1.25rem pr-1.25rem">
+    <div className="text-primary max-w-42rem m-auto mt-6.75rem mb-8rem pl-1.25rem pr-1.25rem">
       <Router source={hashIntegration()}>
         <Routes>
           <Route path="/" component={App} />

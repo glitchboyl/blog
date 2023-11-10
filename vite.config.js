@@ -66,11 +66,10 @@ export default defineConfig({
           },
         ],
       },
-      devOptions: {
-        enabled: true,
-        type: "module",
-        navigateFallback: "index.html",
-      },
+      // devOptions: {
+      //   enabled: true,
+      //   type: "module",
+      // },
     }),
     getPostsPlugin(),
     splitVendorChunkPlugin(),
