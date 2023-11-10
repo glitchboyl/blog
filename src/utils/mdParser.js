@@ -1,5 +1,6 @@
 import frontmatter from "frontmatter";
 import markdownIt from "markdown-it";
+import emoji from "markdown-it-emoji";
 import highlight from "./highlight";
 
 let md = null;
@@ -8,6 +9,7 @@ const createMarkdownRenderer = async () => {
     html: true,
     highlight: await highlight(),
   });
+  md.use(emoji);
 
   const handlePostLink = (link, env) => {
     if (!link.startsWith("http")) {

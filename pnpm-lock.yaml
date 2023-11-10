@@ -19,6 +19,9 @@ devDependencies:
   markdown-it:
     specifier: ^13.0.2
     version: 13.0.2
+  markdown-it-emoji:
+    specifier: ^2.0.2
+    version: 2.0.2
   shiki:
     specifier: ^0.14.5
     version: 0.14.5
@@ -2968,6 +2971,10 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
+    dev: true
+
+  /markdown-it-emoji@2.0.2:
+    resolution: {integrity: sha512-zLftSaNrKuYl0kR5zm4gxXjHaOI3FAOEaloKmRA5hijmJZvSjmxcokOLlzycb/HXlUFWzXqpIEoyEMCE4i9MvQ==}
     dev: true
 
   /markdown-it@13.0.2:
