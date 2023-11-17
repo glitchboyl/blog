@@ -1,6 +1,6 @@
 ---
 title: Oops, 踩了一下 Babel 的坑
-date: 2018.12.21
+date: 2018-12-21
 ---
 
 

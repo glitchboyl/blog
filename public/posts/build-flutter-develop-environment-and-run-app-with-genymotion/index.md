@@ -1,6 +1,6 @@
 ---
 title: 搭建 Flutter 开发环境 + Genymotion 运行应用
-date: 2019.12.25
+date: 2019-12-25
 ---
 
 

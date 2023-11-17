@@ -1,6 +1,6 @@
 ---
 title: 用 React 做个 Emoji version 的扫雷
-date: 2018.09.14
+date: 2018-09-14
 ---
 
 

@@ -1,6 +1,6 @@
 ---
 title: HashRouter 模式的锚点定位
-date: 2019.11.26
+date: 2019-11-26
 ---
 
 
