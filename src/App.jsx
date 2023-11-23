@@ -13,7 +13,7 @@ export default function App() {
       <ul className="m-0 mt-4.5rem p-0 list-none text-right">
         <For each={posts()}>
           {({ name, title, date }) => (
-            <li className="mt-1em mb-1em flex flex-col flex-items-end sm:flex-row sm:justify-end sm:flex-items-baseline">
+            <li className="my-1em flex flex-col flex-items-end sm:flex-row sm:justify-end sm:flex-items-baseline">
               <A className="no-underline" href={name}>
                 {"#"}&nbsp;&nbsp;&nbsp;{title}
               </A>
