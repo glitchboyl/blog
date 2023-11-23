@@ -1,4 +1,4 @@
-import { createResource, createMemo } from "solid-js";
+import { createResource } from "solid-js";
 import parser from "./mdParser";
 import { posts as names } from "virtual:get-posts";
 
@@ -14,18 +14,28 @@ const [store, { mutate }] = createResource(
       request.onsuccess = () => resolve(request.result);
     });
 
-    const _store = {};
-    for (const name of names) {
-      const post = await getPost(name);
-      _store[name] = post;
-    }
-
-    return _store;
+    return await new Promise((resolve) => {
+      const request = db
+        .transaction("posts", "readonly")
+        .objectStore("posts")
+        .getAll();
+      request.onsuccess = () => {
+        const dbStore = Object.fromEntries(
+          request.result.map((post) => [post.name, post])
+        );
+        resolve(dbStore);
+        update(dbStore);
+      };
+    });
   },
   { initialValue: {} }
 );
+const posts = () =>
+  Object.values(store()).sort(
+    (a, b) => Date.parse(b.date) - Date.parse(a.date)
+  );
 
-const fetchPost = async (name) => {
+async function fetchPost(name) {
   try {
     const rawPost = await fetch(`./posts/${name}/index.md`);
     if (rawPost.ok) {
@@ -34,58 +44,48 @@ const fetchPost = async (name) => {
         raw: await rawPost.text(),
       });
     }
-  } catch {}
-  return null;
-};
-
-const getPost = (name) =>
-  new Promise((resolve) => {
-    const request = db
-      .transaction("posts", "readonly")
-      .objectStore("posts")
-      .get(name);
-
-    request.onsuccess = async () => {
-      if (request.result) {
-        resolve(request.result);
-        updatePost(request.result);
-      } else {
-        const post = await fetchPost(name);
-        if (post) {
-          db.transaction("posts", "readwrite").objectStore("posts").add(post);
-        }
-        resolve(post);
-      }
-    };
-  });
-
-const updatePost = async ({ name, title, date, content }) => {
-  const post = await fetchPost(name);
-  if (
-    post &&
-    (post.content !== content || post.title !== title || post.date !== date)
-  ) {
-    db.transaction("posts", "readwrite").objectStore("posts").put(post);
-    mutate({ ...store(), [name]: post });
+  } catch (err) {
+    console.error(err);
   }
-};
+  return null;
+}
+
+async function update(dbStore) {
+  const _store = { ...dbStore };
+  for (const name of new Set([...Object.keys(dbStore), ...names])) {
+    if (!names.has(name)) {
+      db.transaction("posts", "readonly").objectStore("posts").delete(name);
+      delete _store[name];
+    } else {
+      const originalPost = dbStore[name];
+      const post = await fetchPost(name);
+      if (
+        !originalPost ||
+        originalPost.title !== post.title ||
+        originalPost.content !== originalPost.content ||
+        originalPost.date !== post.date
+      ) {
+        db.transaction("posts", "readwrite").objectStore("posts").put(post);
+        _store[name] = post;
+      }
+    }
+  }
+  mutate(_store);
+}
 
 if (import.meta.hot) {
-  import.meta.hot.on("post-update", ({ file, name }) => {
+  import.meta.hot.on("post-update", async ({ file, name }) => {
     if (
       (file.endsWith(".md") && file.endsWith("/index.md")) ||
       !file.endsWith(".md")
     ) {
-      getPost(name);
+      const post = await fetchPost(name);
+      db.transaction("posts", "readwrite").objectStore("posts").put(post);
+      mutate({ ...store(), [name]: post });
     }
   });
 }
 
 export default function usePosts() {
-  const posts = createMemo(() =>
-    Object.values(store()).sort(
-      (a, b) => Date.parse(b.date) - Date.parse(a.date)
-    )
-  );
   return { posts, store };
 }

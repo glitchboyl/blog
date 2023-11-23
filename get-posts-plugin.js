@@ -50,7 +50,7 @@ export default function getPostsPlugin() {
           }
         }
         return `
-          export const posts = ${JSON.stringify(posts)};
+          export const posts = new Set(${JSON.stringify(posts)});
         `;
       }
     },

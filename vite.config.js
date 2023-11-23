@@ -81,10 +81,12 @@ export default defineConfig({
     minify: true,
     rollupOptions: {
       treeshake: true,
-      external: ["markdown-it"],
+      external: ["frontmatter", "markdown-it", "markdown-it-emoji"],
       output: {
         paths: {
-          "markdown-it": cdn("markdown-it@13.0.2/dist/markdown-it.min.js/+esm"),
+          frontmatter: cdn("frontmatter@latest/+esm"),
+          "markdown-it": cdn("markdown-it@latest/dist/markdown-it.min.js/+esm"),
+          "markdown-it-emoji": cdn("markdown-it-emoji@latest/+esm"),
         },
       },
     },
