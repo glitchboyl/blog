@@ -15,6 +15,8 @@ export default defineConfig({
       "hyperlink:dark": "#B0B0B8",
       "hyperlink:hover": "#E282FA",
       "hyperlink:dark:hover": "#EDA8FB",
+      "inline-code-block": "#FEEBFF",
+      "inline-code-block:dark": "#12001A",
       "table-border": "#d0d7de",
       "table-border:dark": "#30363d",
       "table-2n-row": "#f6f8fa",
@@ -27,7 +29,8 @@ export default defineConfig({
         *{box-sizing:border-box;}
         html{font-family:serif;}
         pre{margin-left:-1rem;margin-right:-1rem;padding:1rem;overflow:auto;border-radius:0.5rem;}
-        blockquote{margin-left:-1rem;margin-right:-1rem;padding-left:1rem;padding-right:1rem;border-left:3px solid;border-color:#A9AAB8;}
+        blockquote{margin-left:-1rem;margin-right:-1rem;padding-left:1rem;padding-right:1rem;border-left:3px solid;border-color:#A9AAB8;opacity:.75;}
+        :not(pre)>code{padding:0.2em 0.2em 0.1em;border-radius:0.4rem;white-space:normal;background-color:${colors["inline-code-block"]};}
         a{color:${colors.hyperlink};transition-property:color;transition-timing-function:cubic-bezier(0.4,0,0.2,1);transition-duration:300ms;}
         a:hover{color:${colors["hyperlink:hover"]}}
         img{max-width:100%;}
@@ -37,6 +40,7 @@ export default defineConfig({
         @media (prefers-color-scheme: dark){
           a{color:${colors["hyperlink:dark"]}}
           a:hover{color:${colors["hyperlink:dark:hover"]}}
+          :not(pre)>code{background-color:${colors["inline-code-block:dark"]}}
           table th,table td{border-color:${colors["table-border:dark"]};}
           table tr:nth-child(2n){background-color:${colors["table-2n-row:dark"]}}
         }
