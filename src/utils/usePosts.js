@@ -39,11 +39,11 @@ async function fetchPost(name) {
   try {
     const rawPost = await fetch(`./posts/${name}/index.md`);
     if (rawPost.ok) {
-      const raw = await rawPost.text();
-      return await parser({
+      const post = await parser({
         name,
-        raw,
+        raw: await rawPost.text(),
       });
+      return post;
     }
   } catch (err) {
     console.error(err);
