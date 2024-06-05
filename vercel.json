@@ -1,1 +1,8 @@
-{}
+{
+  "routes": [
+    {
+      "src": "/_posts/my-understanding-of-dynamic-programming/index.md",
+      "dest": "/_posts/my-understanding-of-dynamic-programming/index.md"
+    }
+  ]
+}
