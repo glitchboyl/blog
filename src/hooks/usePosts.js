@@ -1,5 +1,5 @@
 import { createResource } from "solid-js";
-import parser from "./mdParser";
+import parser from "../utils/mdParser";
 import { posts as names } from "virtual:get-posts";
 
 let db;
@@ -37,7 +37,7 @@ const posts = () =>
 
 async function fetchPost(name) {
   try {
-    const rawPost = await fetch(`./posts/${name}/index.md`);
+    const rawPost = await fetch(`./_posts/${name}/index.md`);
     if (rawPost.ok) {
       const post = await parser({
         name,

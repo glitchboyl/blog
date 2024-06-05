@@ -1,5 +1,5 @@
 import { createSignal, createEffect, onCleanup } from "solid-js";
-import { title as originalTitle } from "../meta.data";
+import { title as originalTitle } from "../metadata";
 
 const [title, setTitle] = createSignal(originalTitle);
 createEffect(() => {

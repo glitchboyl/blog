@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router";
-import usePosts from "./utils/usePosts";
+import usePosts from "./hooks/usePosts";
 
 export default function App() {
   const { posts } = usePosts();

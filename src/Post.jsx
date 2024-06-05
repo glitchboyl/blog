@@ -1,8 +1,8 @@
 import { createSignal, createMemo, createEffect } from "solid-js";
 import { useParams, useNavigate, A } from "@solidjs/router";
-import { title } from "./meta.data";
-import usePosts from "./utils/usePosts";
-import useTitle from "./utils/useTitle";
+import { title } from "./metadata";
+import usePosts from "./hooks/usePosts";
+import useTitle from "./hooks/useTitle";
 
 export default function Post() {
   const params = useParams();

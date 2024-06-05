@@ -4,12 +4,13 @@ import UnoCSS from "unocss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 import getPostsPlugin from "./get-posts-plugin";
 
-import meta from "./src/meta.data";
+import meta from "./src/metadata";
 
 const cdn = (path) => `https://cdn.jsdelivr.net/npm/${path}`;
 
 export default defineConfig({
   base: "/",
+  assetsInclude: "**/*.md",
   plugins: [
     solid(),
     UnoCSS(),

@@ -1,3 +1,5 @@
 {
-  "rewrites": [{ "source": "/posts/:post*", "destination": "/posts/:post*" }]
+  "rewrites": [
+    { "source": "/_posts/:post*/*.md", "destination": "/_posts/:post*/*.md" }
+  ]
 }

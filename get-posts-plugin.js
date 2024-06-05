@@ -5,7 +5,7 @@ export default function getPostsPlugin() {
   const virtualModuleId = "virtual:get-posts";
   const resolvedVirtualModuleId = "\0" + virtualModuleId;
 
-  const postsDir = join(__dirname, "public", "posts");
+  const postsDir = join(process.cwd(), "public", "_posts");
   const postPath = (p) => join(postsDir, p, "index.md");
 
   return {
@@ -18,7 +18,7 @@ export default function getPostsPlugin() {
     },
 
     async handleHotUpdate({ file, server }) {
-      const isPostUpdated = file.match(/\/posts\/(.*)\/.*$/);
+      const isPostUpdated = file.match(/\/_posts\/(.*)\/.*$/);
       if (isPostUpdated) {
         const name = isPostUpdated[1];
         try {
