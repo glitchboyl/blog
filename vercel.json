@@ -1,8 +1,8 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/_posts/my-understanding-of-dynamic-programming/index.md",
-      "dest": "/_posts/my-understanding-of-dynamic-programming/index.md"
+      "source": "/_posts/my-understanding-of-dynamic-programming/index.md",
+      "destination": "/_posts/my-understanding-of-dynamic-programming/index.md"
     }
   ]
 }
