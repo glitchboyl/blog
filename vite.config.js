@@ -9,7 +9,7 @@ import meta from "./src/meta.data";
 const cdn = (path) => `https://cdn.jsdelivr.net/npm/${path}`;
 
 export default defineConfig({
-  base: "./",
+  base: "/",
   plugins: [
     solid(),
     UnoCSS(),
