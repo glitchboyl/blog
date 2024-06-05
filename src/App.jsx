@@ -8,7 +8,7 @@ export default function App() {
       <div>
         <p>hi there,</p>
         <p>i am glitchboyl, a frontend engineer.</p>
-        <p>School days. 📚</p>
+        <p>currently, i am researching how to become a indie developer. 🤔</p>
       </div>
       <ul className="m-0 mt-4.5rem p-0 list-none text-right">
         <For each={posts()}>
