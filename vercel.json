@@ -1,5 +1,1 @@
-{
-  "rewrites": [
-    { "source": "/_posts/:post*/*.md", "destination": "/_posts/:post*/*.md" }
-  ]
-}
+{}
